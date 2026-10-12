@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI-Based Resume Analyzer | B.Tech CSE Project</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header class="header">
+    <div class="container nav-container">
+      <div class="logo">
+        <span class="logo-badge">ATS 2.0</span>
+        <span class="logo-title">AI-Based Resume Analyzer</span>
+      </div>
+      <nav class="nav-links">
+        <a href="#how-it-works">Scoring Logic</a>
+        <a href="#history">Database History</a>
+        <a href="#portfolio">B.Tech Portfolio</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero-section">
+      <h1 class="hero-title">Evaluate Resume Match Against Any Job Description</h1>
+      <p class="hero-subtitle">
+        Transparent algorithmic skill gap matching, quantified project metrics evaluation, and core CS placement recommendations.
+      </p>
+    </section>
+
+    <div class="analyzer-grid">
+      <!-- Upload Card -->
+      <div class="card upload-card">
+        <h2>1. Upload Resume</h2>
+        <p class="section-desc">Supports PDF and DOCX files. Files are parsed in-memory and deleted immediately.</p>
+        
+        <div id="drop-zone" class="drop-zone">
+          <input type="file" id="resume-file" accept=".pdf,.docx,.txt" class="file-input">
+          <div class="drop-zone-prompt">
+            <svg width="40" height="40" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg>
+            <p><strong>Click to browse</strong> or drag & drop resume</p>
+            <span class="hint">PDF, DOCX up to 16MB</span>
+          </div>
+          <div id="file-info" class="file-info hidden"></div>
+        </div>
+
+        <div class="sample-actions">
+          <span>Or load sample resume:</span>
+          <button type="button" class="btn-sample" onclick="loadSampleResume('sde')">SDE 1 (Full Stack)</button>
+          <button type="button" class="btn-sample" onclick="loadSampleResume('ml')">ML / Data Science</button>
+        </div>
+
+        <div class="manual-input-toggle">
+          <details>
+            <summary>Or paste resume text manually</summary>
+            <textarea id="resume-text" placeholder="Paste extracted resume text here..."></textarea>
+          </details>
+        </div>
+      </div>
+
+      <!-- Job Description Card -->
+      <div class="card jd-card">
+        <h2>2. Target Job Description</h2>
+        <p class="section-desc">Paste the requirements, qualifications, and tech stack from the job posting.</p>
+        
+        <div class="jd-presets">
+          <span>Sample Job Postings:</span>
+          <button type="button" class="btn-sample" onclick="loadSampleJD('fullstack')">Full Stack Engineer</button>
+          <button type="button" class="btn-sample" onclick="loadSampleJD('aiml')">AI/ML Engineer</button>
+        </div>
+
+        <textarea id="job-description" class="jd-textarea" placeholder="Paste full job description here (e.g. Seeking Software Engineer with Python, React, PostgreSQL, Docker, AWS...)"></textarea>
+
+        <button id="analyze-btn" class="btn-primary" onclick="submitAnalysis()">
+          <span>Analyze Resume & Calculate Match</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Live Analysis Dashboard -->
+    <div id="results-section" class="results-container hidden">
+      <div class="results-header">
+        <h2>Analysis Results & Placement Feedback</h2>
+        <button class="btn-secondary" onclick="window.print()">Download Report (PDF)</button>
+      </div>
+
+      <div class="score-card">
+        <div class="score-radial">
+          <div id="score-number" class="score-display">0%</div>
+          <span class="score-label">Skill Match Score</span>
+        </div>
+        <div class="score-breakdown">
+          <h3>Algorithmic Weighting</h3>
+          <p class="formula-text" id="formula-text"></p>
+          <div class="metric-row">
+            <span>Required Skill Coverage:</span>
+            <strong id="metric-skill">0%</strong>
+          </div>
+          <div class="metric-row">
+            <span>Project Action & Impact Verbs:</span>
+            <strong id="metric-project">0%</strong>
+          </div>
+          <div class="metric-row">
+            <span>Core CS Placement Foundation:</span>
+            <strong id="metric-core-cs">0%</strong>
+          </div>
+        </div>
+      </div>
+
+      <div class="skills-grid">
+        <div class="card">
+          <h3 class="matched-title">Matched Skills</h3>
+          <div id="matched-skills-list" class="skills-wrap"></div>
+        </div>
+        <div class="card">
+          <h3 class="missing-title">Missing Required Skills</h3>
+          <div id="missing-skills-list" class="skills-wrap"></div>
+        </div>
+      </div>
+
+      <div class="card feedback-card">
+        <h3>Resume Enhancement Recommendations</h3>
+        <div id="feedback-list" class="feedback-items"></div>
+      </div>
+    </div>
+  </main>
+
+  <script src="/static/js/main.js"></script>
+</body>
+</html>

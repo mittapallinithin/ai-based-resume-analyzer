@@ -1,0 +1,6 @@
+{
+  "name": "AI-Based Resume Analyzer",
+  "description": "Intelligent ATS resume analyzer and job match platform for B.Tech CSE placements, skill gap analysis, and career feedback.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
